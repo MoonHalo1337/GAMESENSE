@@ -1,0 +1,23 @@
+--Credits:
+--idea @Sola不吃鱼
+--source code https://gamesense.pub/forums/viewtopic.php?id=16679 @pikaqu
+
+local free = ui.reference("AA","Anti-aimbot angles","Freestanding")
+local pitch = ui.reference("AA","Anti-aimbot angles","Pitch")
+local r = ui.reference("RAGE","Aimbot","reduce aim step")
+local enable = ui.new_checkbox("AA","Anti-aimbot angles","Advanced on-shot antiaim")
+
+function freestandingonshot(e)
+    local PKQ = client.userid_to_entindex(e.userid)
+    if PKQ == entity.get_local_player()  then
+	if ui.get(enable) then 
+	ui.set(free,"Default")
+	ui.set(r,true)
+	ui.set(pitch, "minimal")
+	client.delay_call(0.4,ui.set,free,"-")
+	client.delay_call(0.8,ui.set,r,false)
+	client.delay_call(0.4,ui.set,pitch,"off")
+		end	
+	end
+end
+client.set_event_callback("weapon_fire",freestandingonshot)
