@@ -3,7 +3,7 @@ local hotkey = ui_new_hotkey("rage","aimbot","Automatic penetration", true)
 local auto = ui_reference("rage","aimbot","Automatic penetration")
 
 client.set_event_callback("paint_ui",function()
-  if ui_get(hotkey) ~= true then return end
+  if ui_get(auto) ~= true then return end
 	renderer.indicator(50,150,255,245,"WALL")
 end)
 
