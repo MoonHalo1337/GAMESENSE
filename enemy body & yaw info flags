@@ -1,0 +1,21 @@
+local g_ref, g_yaw_ref, g_body_ref, g_yaw_comb, g_body_comb, g_yaw_string, g_body_string = ui.new_checkbox('lua', 'a', 'show enemy info'), ui.new_checkbox('lua', 'a', 'add enemy yaw info'), ui.new_checkbox('lua', 'a', 'add enemy body info'), ui.new_combobox('lua', 'a', 'yaw flag style', 'short', 'full', 'blank'), 
+ui.new_combobox('lua', 'a', 'body flag style', 'short', 'full', 'blank'), { ['short'] = 'Y:  ', ['full'] = 'YAY:  ', ['blank'] = '' }, { ['short'] = 'B:  ', ['full'] = 'BODY:  ', ['blank'] = '' }
+
+ui.set_callback(g_ref, function()
+  ui.set_visible( g_yaw_ref, ui.get( g_ref ) )
+  ui.set_visible( g_body_ref, ui.get( g_ref ) )
+	ui.set_visible( g_yaw_comb, ui.get( g_ref ) )
+  ui.set_visible( g_body_comb, ui.get( g_ref ) )
+end)
+
+client.register_esp_flag('', 50, 150, 255, function(player)
+if entity.is_enemy( player ) then
+    return ui.get( g_yaw_ref ) and ui.get( g_ref ), g_yaw_string[ ui.get ( g_yaw_comb ) ] .. math.floor( entity.get_prop( player, 'm_flPoseParameter', 12 ) * 180 - 90 )
+  end
+end)
+
+client.register_esp_flag('', 255, 55, 55, function(player)
+if entity.is_enemy( player ) then
+    return ui.get( g_body_ref ) and ui.get( g_ref ), g_body_string[ ui.get ( g_body_comb ) ] .. math.floor( entity.get_prop( player, 'm_flPoseParameter', 11 ) * 120 - 60 )
+  end
+end)
